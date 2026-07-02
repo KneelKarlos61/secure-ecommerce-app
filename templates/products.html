@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Products - Carlos Tech Supply</title>
+</head>
+<body>
+    <h1>Carlos Tech Supply Products</h1>
+
+    <p>A small online store for student cybersecurity gear.</p>
+
+    <a href="/">Home</a>
+
+    <hr>
+#For every product Flask sends to this page, show it on the screen.
+    {% for product in products %}
+        <div>
+            <h2>{{ product["name"] }}</h2>
+
+            <p><strong>Category:</strong> {{ product["category"] }}</p>
+
+            <p>{{ product["description"] }}</p>
+
+            <p><strong>Price:</strong> ${{ "%.2f"|format(product["price"]) }}</p>
+
+            <p><strong>Stock:</strong> {{ product["stock"] }}</p>
+
+            <button>Add to Cart</button>
+        </div>
+
+        <hr>
+    {% endfor %}
+</body>
+</html>

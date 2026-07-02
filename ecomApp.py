@@ -1,7 +1,13 @@
+import sqlite3
 from flask import Flask, render_template
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "dev-secret-key-change-later"
+def get_db_connection():
+    connection = sqlite3.connect("database/ecommerce.db")
+    connection.row_factory = sqlite3.Row
+    return connection
+
 
 @app.route("/")
 def home():
@@ -9,12 +15,16 @@ def home():
 
 @app.route("/products")
 def products():
-    sample_products = [
-        {"id": 1, "name": "Laptop Stand", "price": 29.99},
-        {"id": 2, "name": "Wireless Mouse", "price": 19.99},
-        {"id": 3, "name": "USB-C Cable", "price": 9.99},
-    ]
-    return render_template("products.html", products=sample_products)
+    connection = get_db_connection()
+
+    products = connection.execute("""
+        SELECT id, name, description, category, price, stock, image
+        FROM products
+    """).fetchall()
+
+    connection.close()
+
+    return render_template("products.html", products=products)
 
 @app.route("/checkout")
 def checkout():
