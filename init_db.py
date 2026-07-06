@@ -8,6 +8,10 @@ DROP TABLE IF EXISTS products
 """)
 
 cursor.execute("""
+DROP TABLE IF EXISTS users
+""")
+
+cursor.execute("""
 CREATE TABLE products (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT NOT NULL,
@@ -16,6 +20,15 @@ CREATE TABLE products (
     price REAL NOT NULL,
     stock INTEGER NOT NULL,
     image TEXT
+)
+""")
+
+cursor.execute("""
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'buyer'
 )
 """)
 
@@ -74,6 +87,16 @@ cursor.executemany("""
 INSERT INTO products (name, description, category, price, stock, image)
 VALUES (?, ?, ?, ?, ?, ?)
 """, products)
+
+# Create users table for login/register system
+connection.execute("""
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    role TEXT NOT NULL DEFAULT 'buyer'
+)
+""")
 
 connection.commit()
 connection.close()

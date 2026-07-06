@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout - Carlos Tech Supply</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <nav>
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+
+    <div class="container">
+        <h1>Checkout</h1>
+
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <p>You are logged in as: <strong>{{ session.get("username") }}</strong></p>
+
+        <h2>Order Summary</h2>
+        <p>This is a protected checkout page. Only logged-in users can access it.</p>
+
+        <form method="POST">
+            <p>
+                <label>Shipping Address:</label><br>
+                <input type="text" name="address" placeholder="123 Main Street" required>
+            </p>
+
+            <p>
+                <label>Payment Method:</label><br>
+                <select name="payment" required>
+                    <option value="">Choose one</option>
+                    <option value="card">Credit/Debit Card</option>
+                    <option value="paypal">PayPal</option>
+                </select>
+            </p>
+
+            <button type="submit">Place Order</button>
+        </form>
+    </div>
+
+</body>
+</html>

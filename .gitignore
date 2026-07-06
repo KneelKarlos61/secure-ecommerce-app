@@ -1,6 +1,7 @@
 venv/
 __pycache__/
 *.pyc
-.env
-instance/
-.vscode/
+
+certs/*.key
+certs/*.srl
+database/ecommerce.db
