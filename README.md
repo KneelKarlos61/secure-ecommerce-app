@@ -144,7 +144,5 @@ in the terminal where the server is running. If you modify the ecomApp.py file t
 ## Author
 
 Neil Carlos
-
-## Project Status
-
-Completed for class project demonstration.
+07.07.26
+CSUS CSC 154
