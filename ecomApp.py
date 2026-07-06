@@ -173,7 +173,14 @@ def merchant_dashboard():
     <p>Only merchants can access this page.</p>
     <p><a href="/">Back Home</a></p>
     """
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    search_text = ""
 
+    if request.method == "POST":
+        search_text = request.form["search_text"]
+
+    return render_template("search.html", search_text=search_text)
 
 if __name__ == "__main__":
     app.run(

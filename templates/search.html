@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XSS Test</title>
+</head>
+<body>
+    <h1>XSS Protection Test</h1>
+
+    <form method="POST">
+        <p>
+            <label>Search:</label>
+            <input type="text" name="search_text" required>
+        </p>
+
+        <button type="submit">Search</button>
+    </form>
+
+    {% if search_text %}
+        <h2>Search Result:</h2>
+        <p>You searched for: {{ search_text }}</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('home') }}">Back Home</a></p>
+</body>
+</html>
