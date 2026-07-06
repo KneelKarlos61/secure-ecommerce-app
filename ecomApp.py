@@ -1,7 +1,8 @@
 import sqlite3
 from functools import wraps
-from flask import Flask, render_template, request, redirect, url_for, session, flash
-from werkzeug.security import generate_password_hash, check_password_hash
+
+from flask import Flask, flash, redirect, render_template, request, session, url_for
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 app = Flask(__name__)
@@ -20,7 +21,9 @@ def login_required(route_function):
         if "user_id" not in session:
             flash("Please log in first.")
             return redirect(url_for("login"))
+
         return route_function(*args, **kwargs)
+
     return wrapper
 
 
@@ -33,11 +36,15 @@ def role_required(allowed_roles):
                 return redirect(url_for("login"))
 
             if session.get("role") not in allowed_roles:
-                flash("Access denied. Your role does not have permission for that page.")
-                return redirect(url_for("home"))
+                return (
+                    "<h1>Access Denied</h1>"
+                    "<p>Your role does not have permission for this page.</p>"
+                ), 403
 
             return route_function(*args, **kwargs)
+
         return wrapper
+
     return decorator
 
 
@@ -59,7 +66,7 @@ def register():
         try:
             connection.execute(
                 "INSERT INTO users (username, password_hash, role) VALUES (?, ?, ?)",
-                (username, password_hash, "buyer")
+                (username, password_hash, "buyer"),
             )
 
             connection.commit()
@@ -86,7 +93,7 @@ def login():
 
         user = connection.execute(
             "SELECT * FROM users WHERE username = ?",
-            (username,)
+            (username,),
         ).fetchone()
 
         connection.close()
@@ -116,14 +123,16 @@ def logout():
 def products():
     connection = get_db_connection()
 
-    products = connection.execute("""
+    products_list = connection.execute(
+        """
         SELECT id, name, description, category, price, stock, image
         FROM products
-    """).fetchall()
+        """
+    ).fetchall()
 
     connection.close()
 
-    return render_template("products.html", products=products)
+    return render_template("products.html", products=products_list)
 
 
 @app.route("/checkout", methods=["GET", "POST"])
@@ -171,5 +180,5 @@ if __name__ == "__main__":
         host="0.0.0.0",
         port=5000,
         debug=True,
-        ssl_context=("certs/server.crt", "certs/server.key")
+        ssl_context=("certs/server.crt", "certs/server.key"),
     )
