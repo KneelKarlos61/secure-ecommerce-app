@@ -31,7 +31,6 @@ This project was developed as a college cybersecurity project and is intended fo
 * OpenSSL for local HTTPS certificates
 
 ## Repository Structure
-## Repository Structure
 
 - ecommApp.py - Main Flask application file. Contains routes, authentication, HTTPS startup, and RBAC checks.
 - init_db.py - Creates and initializes the SQLite database tables.
