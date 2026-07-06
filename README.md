@@ -31,33 +31,26 @@ This project was developed as a college cybersecurity project and is intended fo
 * OpenSSL for local HTTPS certificates
 
 ## Repository Structure
+## Repository Structure
 
-
-project-folder/
-│
-├── ecommApp.py
-├── init_db.py
-├── schema.sql
-├── requirements.txt
-├── README.md
-│
-├── database/
-│   └── ecommerce.db
-│
-├── templates/
-│   ├── base.html
-│   ├── login.html
-│   ├── register.html
-│   ├── products.html
-│   └── admin.html
-│
-├── static/
-│   └── style.css
-│
-└── certs/
-    ├── server.crt
-    └── server.key
-
+- ecommApp.py - Main Flask application file. Contains routes, authentication, HTTPS startup, and RBAC checks.
+- init_db.py - Creates and initializes the SQLite database tables.
+- requirements.txt - Lists the Python packages needed to run the project.
+- templates/ - HTML templates used by Flask.
+  - home.html - Homepage.
+  - products.html - Product listing page.
+  - register.html - User registration page.
+  - login.html - User login page.
+  - checkout.html - Protected checkout page.
+  - search.html - XSS testing page.
+- static/ - CSS and other static files.
+  - style.css - Basic styling for the web pages.
+- certs/ - Local HTTPS certificate files.
+  - ca.crt - Local certificate authority certificate.
+  - server.crt - Server certificate used by Flask.
+  - server.ext - Certificate extension file with Subject Alternative Name settings.
+- database/ - Local SQLite database folder.
+  - ecommerce.db - Local development database file. This file is ignored by Git.
 
 
 ## How to Reproduce the Environment
